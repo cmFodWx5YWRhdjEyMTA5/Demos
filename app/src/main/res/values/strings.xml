@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Demos</string>
+    <string name="facebook_app_id">1671329073123097</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="details">Details</string>
+    <string name="contacts">Load Contacts</string>
+    <string name="photo">Upload Photo</string>
+    <string name="name">Enter Name</string>
+    <string name="email">Enter Email Id</string>
+    <string name="phone">Enter Phone</string>
+    <string name="update">Update Now</string>
+    <string name="user">Add User</string>
+    <string name="warning">No Users data available. Please add users.</string>
+    <string name="username">User Name</string>
+    <string name="names">Name</string>
+<string name="emails">Email</string>
+    <string name="phones">Phone</string>
+</resources>
