@@ -5,9 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
+
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -65,8 +63,8 @@ public class DetailsListActivity extends AppCompatActivity {
 
 
         Map<String, String> params = new HashMap<>();
-        params.put("action", "providerServices");
-        params.put("type", "2");
+        params.put("action", "");
+        params.put("type", "");
         getservicelistname(params);
     }
 

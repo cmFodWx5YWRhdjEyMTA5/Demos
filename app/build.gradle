@@ -4,9 +4,8 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.enigneerbabu.demos"
-        minSdkVersion 15
+        minSdkVersion 23
         targetSdkVersion 26
-        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -24,13 +23,10 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:support-v4:26.1.0'
-    implementation 'com.daimajia.slider:library:1.1.5@aar'
-    implementation 'com.daimajia.androidanimations:library:2.3@aar'
     implementation 'com.github.bumptech.glide:glide:4.1.0' // added for glide
-    implementation 'com.android.support:multidex:1.0.1'
     implementation 'com.android.volley:volley:1.1.0' // added for volley api
     implementation 'com.google.code.gson:gson:2.8.2' //added for gson
-    implementation 'com.android.support:recyclerview-v7:25.0.0'
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -38,6 +34,8 @@ dependencies {
     implementation 'com.android.support:design:26.1.0' // Added for tablayout
     implementation 'com.android.support:cardview-v7:26.1.0'
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
+    implementation 'com.facebook.android:facebook-login:[4,5)'
+
 
 
 }
