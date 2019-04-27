@@ -29,6 +29,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
+                android:background="@color/splash"
+                android:textColor="@color/windowBackground"
                 android:text="@string/photo"
                 android:textAllCaps="false" />
 
@@ -102,5 +104,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:text="@string/user"
+        android:background="@color/splash"
+        android:textColor="@color/windowBackground"
         android:textAllCaps="false" />
 </RelativeLayout>

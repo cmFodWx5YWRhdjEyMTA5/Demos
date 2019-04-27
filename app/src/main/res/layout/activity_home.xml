@@ -24,8 +24,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/toolbar"
             app:tabBackground="@android:color/darker_gray"
-            app:tabIndicatorColor="@color/red"
-            app:tabSelectedTextColor="@color/red"
+            app:tabIndicatorColor="@color/splash"
+            app:tabSelectedTextColor="@color/splash"
             app:tabTextColor="@color/navigationBarColor" />
 
         <FrameLayout

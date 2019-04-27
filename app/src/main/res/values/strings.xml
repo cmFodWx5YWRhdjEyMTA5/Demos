@@ -2,6 +2,7 @@
     <string name="app_name">Demos</string>
     <string name="facebook_app_id">355779851730249</string>
     <string name="fb_login_protocol_scheme">fb355779851730249</string>
+    <string name="google_direction_key">AIzaSyC4A47Aw2CudrNcSx7IWAmfFoMrUhljdzo</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="details">Details</string>
