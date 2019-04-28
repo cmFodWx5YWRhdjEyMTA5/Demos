@@ -1,78 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- A CardView that contains a TextView -->
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:attr/selectableItemBackground"
-    android:clickable="true"
-    android:focusable="true"
-    android:orientation="vertical"
-    android:padding="@dimen/cardview_compat_inset_shadow">
+    android:background="#fff"
+    android:padding="8dp"
+    android:layout_margin="4dp"
+    card_view:cardCornerRadius="4dp">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/card_view"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="@dimen/cardview_default_elevation"
-        android:layout_gravity="center">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
+
+        <TextView
+            android:id="@+id/layout_Name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="6dp">
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"
+            android:text="2 min Ago "
+            android:textColor="@color/navigationBarColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:id="@+id/layout_card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="1">
+        <TextView
+            android:id="@+id/email_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:letterSpacing="-0.02"
 
-                <TextView
-                    android:id="@+id/layout_Name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:text="Kunal Kapoor"
-                    android:textColor="#696969"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
+            android:lineSpacingExtra="5sp"
+            tools:text="Zero movie review: Shah Rukh Khan dazzles in a strange romance "
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_Name" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:text=" | "
-                    android:textColor="#696969"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/email_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/card_no"
-                    android:text="kunalkapoor@gmail.com"
-                    android:textColor="#696969"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/layout_card"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/layout_description"
-                    android:layout_centerVertical="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hello How are you"
-                    android:textColor="#696969"
-                    android:textSize="14dp" />
-
-            </RelativeLayout>
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-</RelativeLayout>
+        <TextView
+            android:id="@+id/layout_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            tools:text="Zero movie review: Shah Rukh Khan, Katrina Kaif and Anushka Sharma make the first part of Zero flat-out fantastic, an unabashed charm-offensive. It is as the film continues, and gets more fanciful, that the seams start to show."
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/email_name" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

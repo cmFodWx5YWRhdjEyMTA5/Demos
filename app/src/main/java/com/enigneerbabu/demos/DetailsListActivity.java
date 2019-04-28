@@ -64,6 +64,9 @@ public class DetailsListActivity extends AppCompatActivity {
         dividerItemDecoration = new DividerItemDecoration(mList.getContext(), linearLayoutManager.getOrientation());
 
         mList.setHasFixedSize(true);
+        mList.setItemViewCacheSize(20);
+        mList.setDrawingCacheEnabled(true);
+        mList.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         mList.setLayoutManager(linearLayoutManager);
         mList.addItemDecoration(dividerItemDecoration);
         mList.setAdapter(adapter);

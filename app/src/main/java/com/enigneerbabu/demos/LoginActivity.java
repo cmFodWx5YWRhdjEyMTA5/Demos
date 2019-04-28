@@ -1,6 +1,7 @@
 package com.enigneerbabu.demos;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -15,12 +16,13 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -29,14 +31,22 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
-public class LoginActivity extends AppCompatActivity {
-    CallbackManager callbackManager;
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     GoogleSignInClient mGoogleSignInClient;
+    private CallbackManager callbackManager;
+    private LoginButton loginButton;
+    private static final String EMAIL = "email";
+    Context mContext;
     int RC_SIGN_IN = 101;
 
 
@@ -44,13 +54,15 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode,requestCode,data);
+
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
             Task<GoogleSignInAccount> mTask = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(mTask);
+        } else {
+                callbackManager.onActivityResult(requestCode, resultCode, data);
 
         }
     }
@@ -60,29 +72,18 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+        callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_login);
-        LoginButton loginButton = (LoginButton)findViewById(R.id.login_button);
+        mContext = this;
+        loginButton = findViewById(R.id.login_button);
+        loginButton.setOnClickListener(this);
+        printKeyHash(this);
+        callbackManager = CallbackManager.Factory.create();
+
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-        printKeyHash(this);
-        loginButton.setReadPermissions("email");
-        callbackManager = CallbackManager.Factory.create();
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                getUserDetails(loginResult);
-            }
-            @Override
-            public void onCancel() {
-                // App code
-            }
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
-            }
-        });
-
-
         SignInButton signInButton = findViewById(R.id.sign_in_button);
 
 
@@ -107,36 +108,104 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+//            case R.id.fblogin_layout:
+//
+//                loginButton.performClick();
+//
+//                /*
+//                Intent intent = new Intent(LoginActivity.this, Dashboard.class);
+//                startActivity(intent);*/
+//
+//                break;
 
-    private void getUserDetails(LoginResult loginResult) {
-        GraphRequest data_request = GraphRequest.newMeRequest(
-                loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+            case R.id.login_button:
+                loginButton.setReadPermissions(Arrays.asList(EMAIL));
+                loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                     @Override
-                    public void onCompleted(
-                            JSONObject json_object,
-                            GraphResponse response) {
-                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                        intent.putExtra("userProfile", json_object.toString());
-                        startActivity(intent);
+                    public void onSuccess(LoginResult loginResult) {
+
+
+                        Log.d("User ID: ", "User ID: " +
+                                loginResult.getAccessToken().getUserId() + "\n" +
+                                "Auth Token: " + loginResult.getAccessToken().getToken());
+
+                        GraphRequest request = GraphRequest.newMeRequest(
+                                loginResult.getAccessToken(),
+                                new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(JSONObject object, GraphResponse response) {
+                                        // Application code
+                                        try {
+                                            Log.i("Response", response.toString());
+
+                                            String email = response.getJSONObject().getString("email");
+                                            String firstName = response.getJSONObject().getString("first_name");
+                                            String lastName = response.getJSONObject().getString("last_name");
+
+                                            Map<String, String> params = new HashMap<>();
+                                            params.put("name", "" + firstName + " " + lastName);
+                                            params.put("email", "" + email);
+                                            params.put("image", "");
+                                            params.put("mobile", "");
+                                            params.put("loginby", "FACEBOOK");
+                                         //   svaeUserData(params);
+
+//
+// String gender = response.getJSONObject().getString("gender");
+//                                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+//                                            intent.putExtra("fb_firstname",firstName);
+//                                            intent.putExtra("fb_lastname",lastName);
+//                                            intent.putExtra("fb_email",email);
+//                                            startActivity(intent);
+
+
+                                            /*Profile profile = Profile.getCurrentProfile();
+                                            String id = profile.getId();
+                                            String link = profile.getLinkUri().toString();
+                                            Log.i("Link",link);
+                                            if (Profile.getCurrentProfile()!=null)
+                                            {
+                                                Log.i("Login", "ProfilePic" + Profile.getCurrentProfile().getProfilePictureUri(200, 200));
+                                            }*/
+
+                                            Log.i("Login" + "Email", email);
+                                            Log.i("Login" + "FirstName", firstName);
+                                            Log.i("Login" + "LastName", lastName);
+//                                            Log.i("Login" + "Gender", gender);
+
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,email,first_name,last_name,gender");
+                        request.setParameters(parameters);
+                        request.executeAsync();
+                        // LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
                     }
 
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+
+                    }
                 });
-        Bundle permission_param = new Bundle();
-        permission_param.putString("fields", "id,name,email,picture.width(120).height(120)");
-        data_request.setParameters(permission_param);
-        data_request.executeAsync();
+                break;
+
+        }
     }
-    protected void onResume() {
-        super.onResume();
-        // Logs 'install' and 'app activate' App Events.
-        AppEventsLogger.activateApp(this);
-    }
-    @Override
-    protected void onPause() {
-        super.onPause();
-        // Logs 'app deactivate' App Event.
-        AppEventsLogger.deactivateApp(this);
-    }
+
+
+
 
     //Function to update UI
     public void updateUI(GoogleSignInAccount account){
